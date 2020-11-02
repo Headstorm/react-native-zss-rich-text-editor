@@ -1,3 +1,5 @@
+🚨 Allscripts Mobile uses, <b>please do not delete without consulting the Allscripts frontend teams</b>! 🚨
+
 # React Native Rich Text Editor
 
 A fully functional Rich Text Editor for both Android and iOS, based off the [ZSSRichTextEditor](https://github.com/nnhubbard/ZSSRichTextEditor/tree/master/ZSSRichTextEditor) project. 
