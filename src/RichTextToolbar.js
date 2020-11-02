@@ -55,7 +55,7 @@ export default class RichTextToolbar extends Component {
   }
 
   componentDidMount() {
-    const editor = this.props.getEditor();
+    const editor = this.props.getEditor && this.props.getEditor();
     if (!editor) {
       throw new Error('Toolbar has no editor!');
     } else {
@@ -121,6 +121,7 @@ export default class RichTextToolbar extends Component {
        <FlatList
           data={this.state.dataSet}
           numColumns={this.state.actions.length}
+          keyExtractor={(item) => item.action}
           renderItem={(item) => this._renderAction(item.item.action, item.item.selected)}
         />
       </View>
