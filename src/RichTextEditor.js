@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import WebView from 'react-native-webview';
 import {MessageConverter} from './WebviewMessageHandler';
 import {actions, messages} from './const';
-import {Modal, View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, PixelRatio, Keyboard, Dimensions} from 'react-native';
+import {Modal, View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, PixelRatio, Keyboard, Dimensions, Alert} from 'react-native';
 
 // const injectScript = `
 //   (function () {
@@ -171,12 +171,24 @@ export default class RichTextEditor extends Component {
         case messages.SCROLL:
           this.webview.setNativeProps({contentOffset: {y: message.data}});
           break;
+
+
         case messages.TITLE_FOCUSED:
           this.titleFocusHandler && this.titleFocusHandler();
           break;
+        case messages.TITLE_BLURRED:
+          this.titleBlurHandler && this.titleBlurHandler();
+          break;
+
+
         case messages.CONTENT_FOCUSED:
           this.contentFocusHandler && this.contentFocusHandler();
           break;
+        case messages.CONTENT_BLURRED:
+          this.contentBlurHandler && this.contentBlurHandler();
+          break;
+
+
         case messages.SELECTION_CHANGE: {
           const items = message.data.items;
           this.state.selectionChangeListeners.map((listener) => {
@@ -608,9 +620,19 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.setTitleFocusHandler);
   }
 
+  setTitleBlurHandler(callbackHandler) {
+    this.titleBlurHandler = callbackHandler;
+    this._sendAction(actions.setTitleBlurHandler);
+  }
+
   setContentFocusHandler(callbackHandler) {
     this.contentFocusHandler = callbackHandler;
     this._sendAction(actions.setContentFocusHandler);
+  }
+
+  setContentBlurHandler(callbackHandler) {
+    this.contentBlurHandler = callbackHandler;
+    this._sendAction(actions.setContentBlurHandler);
   }
 
   addSelectedTextChangeListener(listener) {
