@@ -1024,6 +1024,16 @@
 			var footer = $('#zss_editor_footer');
 			footer.height(footerHeight + 'px');
 		}
+		
+		// test function to get selectionNodes
+		zss_editor.getSelectionNodes = function () {
+			var sel = window.getSelection();
+			// Next line is comented to prevent deselecting selection. It looks like work but if there are any issues will appear then uconmment it as well as code above.
+			//sel.collapseToStart();
+			var range = sel.getRangeAt(0);
+
+			return [sel, range]
+		}
 
 		zss_editor.getCaretYPosition = function () {
 			var sel = window.getSelection();

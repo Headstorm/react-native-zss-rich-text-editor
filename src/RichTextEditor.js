@@ -623,6 +623,10 @@ export default class RichTextEditor extends Component {
     });
   }
 
+  getSelectionNodes() {
+    this._sendAction(actions.getSelectionNodes);
+  }
+
   setTitleFocusHandler(callbackHandler) {
     this.titleFocusHandler = callbackHandler;
     this._sendAction(actions.setTitleFocusHandler);
