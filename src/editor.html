@@ -822,6 +822,7 @@
 		function setupTouchEndEnableEditing(editorId) {
 			$('#' + editorId).on('touchend', function (e) {
 				zss_editor.enabledEditingItems(e);
+
 				var clicked = $(e.target);
 				if (!clicked.hasClass('zs_active')) {
 					$('img').removeClass('zs_active');
@@ -1398,10 +1399,59 @@
 
 		zss_editor.setContentHTML = function (html) {
 			setHTML('zss_editor_content', html);
+
+			$('.remove-btn').off("click").click((e) => {
+				e.target.parentElement.remove()
+			})
 		}
 
 		zss_editor.insertHTML = function (html) {
 			document.execCommand('insertHTML', false, html);
+			zss_editor.enabledEditingItems();
+		}
+
+		zss_editor.stripInteractivty = function () {
+			$('.remove-btn').remove()
+		}
+
+		zss_editor.insertBase64Img = function (base64String) {
+			const removeBtnStyles = `
+				text-align: center;
+				border-radius: 30px;
+				position: absolute;
+				background-color: lightGrey;
+				top: 10px;
+				right: 10px;
+				width: 18px;
+				height: 18px;
+			`
+			const image = `
+				<img 
+					style="max-width: 400px; border-radius: 6px;" 
+					src="data:image/jpg;base64, ${base64String}"
+					alt="Red dot"
+				/>
+			`
+			const html = `
+				<div 
+					style="position: relative; display: inline-block">
+					<div 
+						style="${removeBtnStyles}" 
+						class="remove-btn"
+					>X</div>
+					${image}
+				</div>
+				<br/>
+			`
+
+			zss_editor.restorerange();
+
+			document.execCommand('insertHTML', false, html);
+
+			$('.remove-btn').off('click').click((e) => {
+				e.target.parentElement.remove()
+			})
+
 			zss_editor.enabledEditingItems();
 		}
 

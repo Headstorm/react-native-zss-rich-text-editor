@@ -20,6 +20,10 @@ export const MessageConverter = (action) => {
       return `zss_editor.setContentHTML('${action.data}');`;
     case `${actions.insertHtml}`:
       return `zss_editor.insertHTML('${action.data}');`;
+    case `${actions.insertBase64Img}`:
+      return `zss_editor.insertBase64Img('${action.data}');`;
+    case `${actions.stripInteractivty}`:
+      return `zss_editor.stripInteractivty();`;
     case `${actions.blurTitleEditor}`:
       return `zss_editor.blurTitleEditor();`;
     case `${actions.blurContentEditor}`:
