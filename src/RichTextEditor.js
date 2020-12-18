@@ -406,6 +406,17 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.insertHtml, html);
   }
 
+  // injects a base64 image with interactive button to remove
+  insertBase64Img(base64String) {
+    this.prepareInsert();
+    this._sendAction(actions.insertBase64Img, base64String);
+  }
+
+  // removes all custom interactivity
+  stripInteractivty() {
+    this._sendAction(actions.stripInteractivty);
+  }
+
   blurTitleEditor() {
     this._sendAction(actions.blurTitleEditor);
   }

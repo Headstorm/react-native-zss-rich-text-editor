@@ -3,6 +3,8 @@ export const actions = {
   setTitleHtml: 'SET_TITLE_HTML',
   setContentHtml: 'SET_CONTENT_HTML',
   insertHtml: 'INSERT_HTML',
+  insertBase64Img: 'INSERT_BASE64_IMG',
+  stripInteractivty: 'STRIP_INTERACTIVITY',
   getTitleHtml: 'GET_TITLE_HTML',
   getTitleText: 'GET_TITLE_TEXT',
   toggleTitle: 'TOGGLE_TITLE',
