@@ -919,8 +919,6 @@
 			whenPastingInsertAsPlainText('zss_editor_title');
 			whenPastingInsertAsPlainText('zss_editor_content');
 
-			zss_editor.focusTitle();
-
 			setTimeout(function () {
 				ReactNativeWebView.postMessage(JSON.stringify({ type: 'ZSS_INITIALIZED' }))
 			}, 20);
@@ -1024,16 +1022,6 @@
 			var footer = $('#zss_editor_footer');
 			footer.height(footerHeight + 'px');
 		}
-		
-		// test function to get selectionNodes
-		zss_editor.getSelectionNodes = function () {
-			var sel = window.getSelection();
-			// Next line is comented to prevent deselecting selection. It looks like work but if there are any issues will appear then uconmment it as well as code above.
-			//sel.collapseToStart();
-			var range = sel.getRangeAt(0);
-
-			return [sel, range]
-		}
 
 		zss_editor.getCaretYPosition = function () {
 			var sel = window.getSelection();
@@ -1098,6 +1086,22 @@
 			if (node) {
 				return (node.nodeName == "#text" ? node.parentNode : node);
 			}
+		};
+		
+		// test function to getSelectionNodes
+		zss_editor.getSelectionNodes = function () {
+			var node, selection;
+			if (window.getSelection) {
+				selection = getSelection();
+				node = selection.anchorNode;
+			}
+			if (!node && document.selection) {
+				selection = document.selection
+				var range = selection.getRangeAt ? selection.getRangeAt(0) : selection.createRange();
+				node = range.commonAncestorContainer ? range.commonAncestorContainer :
+					range.parentElement ? range.parentElement() : range.item(0);
+			}
+			return [node, selection];
 		};
 
 		zss_editor.setBold = function () {
