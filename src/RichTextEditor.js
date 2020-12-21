@@ -25,7 +25,8 @@ export default class RichTextEditor extends Component {
     hiddenTitle: PropTypes.bool,
     enableOnChange: PropTypes.bool,
     footerHeight: PropTypes.number,
-    contentInset: PropTypes.object
+    contentInset: PropTypes.object,
+    keyboardCallback: PropTypes.func,
   };
 
   static defaultProps = {
@@ -80,10 +81,12 @@ export default class RichTextEditor extends Component {
       this.setEditorAvailableHeightBasedOnKeyboardHeight(newKeyboardHeight);
     }
     this.setState({keyboardHeight: newKeyboardHeight});
+    this.props.keyboardCallback();
   }
 
   _onKeyboardWillHide(event) {
     this.setState({keyboardHeight: 0});
+    this.props.keyboardCallback();
   }
 
   setEditorAvailableHeightBasedOnKeyboardHeight(keyboardHeight) {
@@ -99,7 +102,7 @@ export default class RichTextEditor extends Component {
     const { data: str } = nativeEvent;
     try {
       const message = JSON.parse(str);
-
+      
       switch (message.type) {
         case messages.TITLE_HTML_RESPONSE:
           if (this.titleResolve) {
@@ -206,6 +209,18 @@ export default class RichTextEditor extends Component {
           this._selectedTextChangeListeners.forEach((listener) => {
             listener(selectedText);
           });
+          break;
+        }
+        case messages.SELECTION_NODES_RESPONSE: {
+          if (this.selectionNodesResolve) {
+            this.selectionNodesResolve(message.data);
+            this.selectionNodesResolve = undefined;
+            this.selectionNodesReject = undefined;
+            if (this.pendingSelectionNodes) {
+              clearTimeout(this.pendingSelectionNodes);
+              this.pendingSelectionNodes = undefined;
+            }
+          }
           break;
         }
       }
@@ -338,19 +353,26 @@ export default class RichTextEditor extends Component {
 
   _sendAction(action, data) {
     let jsToBeExecutedOnPage = MessageConverter({ type: action, data });
+
     const wrapped = `
       try {
         ${jsToBeExecutedOnPage};
       } catch (e) {
+        console.err(e);
         true;
       }
       true;
     `
+
     this.webview.injectJavaScript(wrapped);
   }
 
   //-------------------------------------------------------------------------------
   //--------------- Public API
+
+  getKeyboardHeight() {
+    return this.state.keyboardHeight;
+  }
 
   showLinkDialog(optionalTitle = '', optionalUrl = '') {
     this.setState({
@@ -578,6 +600,20 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.setPlatform, Platform.OS);
   }
 
+  async getSelectionNodes() {
+    return new Promise((resolve, reject) => {
+      this.selectionNodesResolve = resolve;
+      this.selectionNodesReject = reject;
+      this._sendAction(actions.getSelectionNodes);
+
+      this.pendingSelectionNodes = setTimeout(() => {
+        if (this.selectionNodesReject) {
+          this.selectionNodesReject('no response');
+        }
+      }, 5000);
+    });
+  }
+
   async getTitleHtml() {
     return new Promise((resolve, reject) => {
       this.titleResolve = resolve;
@@ -597,7 +633,7 @@ export default class RichTextEditor extends Component {
       this.titleTextResolve = resolve;
       this.titleTextReject = reject;
       this._sendAction(actions.getTitleText);
-
+      
       this.pendingTitleText = setTimeout(() => {
         if (this.titleTextReject) {
           this.titleTextReject('timeout');

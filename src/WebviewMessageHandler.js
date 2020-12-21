@@ -112,6 +112,9 @@ export const MessageConverter = (action) => {
       return `zss_editor.setContentFocusHandler();`;
     case `${actions.setContentBlurHandler}`:
       return `zss_editor.setContentBlurHandler();`;
+    case `${actions.getSelectionNodes}`:
+      return `var html = zss_editor.getSelectionNodes();
+      ReactNativeWebView.postMessage(JSON.stringify({type: '${messages.SELECTION_NODES_RESPONSE}', data: html}));`
     case `${actions.getTitleHtml}`:
       return `var html = zss_editor.getTitleHTML();
       ReactNativeWebView.postMessage(JSON.stringify({type: '${messages.TITLE_HTML_RESPONSE}', data: html}));`
