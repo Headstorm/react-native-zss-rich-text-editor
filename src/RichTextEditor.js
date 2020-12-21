@@ -212,7 +212,6 @@ export default class RichTextEditor extends Component {
           break;
         }
         case messages.SELECTION_NODES_RESPONSE: {
-          console.log(message);
           if (this.selectionNodesResolve) {
             this.selectionNodesResolve(message.data);
             this.selectionNodesResolve = undefined;
@@ -359,7 +358,8 @@ export default class RichTextEditor extends Component {
       try {
         ${jsToBeExecutedOnPage};
       } catch (e) {
-        console.log(e);
+        console.err(e);
+        true;
       }
       true;
     `
@@ -371,7 +371,6 @@ export default class RichTextEditor extends Component {
   //--------------- Public API
 
   getKeyboardHeight() {
-    console.log(this.state.keyboardHeight);
     return this.state.keyboardHeight;
   }
 
