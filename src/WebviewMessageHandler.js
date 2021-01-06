@@ -113,19 +113,10 @@ export const MessageConverter = (action) => {
     case `${actions.setContentBlurHandler}`:
       return `zss_editor.setContentBlurHandler();`;
 
-
-
-
-
     case `${actions.makeContentAndTitleEditable}`:
       return `zss_editor.makeContentAndTitleEditable();`;
-
     case `${actions.makeContentAndTitleUneditable}`:
       return `zss_editor.makeContentAndTitleUneditable();`;
-
-
-
-
 
     case `${actions.getSelectionNodes}`:
       return `var html = zss_editor.getSelectionNodes();

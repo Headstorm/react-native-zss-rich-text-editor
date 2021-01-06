@@ -388,20 +388,6 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.focusContent);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   makeContentAndTitleEditable() {
     this._sendAction(actions.makeContentAndTitleEditable);
   }
@@ -409,19 +395,6 @@ export default class RichTextEditor extends Component {
   makeContentAndTitleUneditable() {
     this._sendAction(actions.makeContentAndTitleUneditable);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   registerToolbar(listener) {
     this.setState({
