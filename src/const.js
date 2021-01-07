@@ -60,6 +60,9 @@ export const actions = {
   setPlatform: 'SET_PLATFORM',
   
   getSelectionNodes: 'GET_SELECTION_NODES',
+
+  makeContentAndTitleEditable: 'MAKE_CONTENT_AND_TITLE_EDITABLE',
+  makeContentAndTitleUneditable: 'MAKE_CONTENT_AND_TITLE_UNEDITABLE',
 };
 
 

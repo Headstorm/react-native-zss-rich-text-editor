@@ -1658,13 +1658,22 @@
 			editor.focus();
 		}
 
-
 		zss_editor.blurTitleEditor = function () {
 			$('#zss_editor_title').blur();
 		}
 
 		zss_editor.blurContentEditor = function () {
 			$('#zss_editor_content').blur();
+		}
+
+		zss_editor.makeContentAndTitleEditable = function () {
+			$('#zss_editor_title').attr('contenteditable', "true");
+			$('#zss_editor_content').attr('contenteditable', "true");
+		}
+
+		zss_editor.makeContentAndTitleUneditable = function () {
+			$('#zss_editor_title').attr('contenteditable', "false");
+			$('#zss_editor_content').attr('contenteditable', "false");
 		}
 
 		zss_editor.setCustomCSS = function (customCSS) {

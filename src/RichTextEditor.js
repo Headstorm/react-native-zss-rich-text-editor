@@ -388,6 +388,14 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.focusContent);
   }
 
+  makeContentAndTitleEditable() {
+    this._sendAction(actions.makeContentAndTitleEditable);
+  }
+
+  makeContentAndTitleUneditable() {
+    this._sendAction(actions.makeContentAndTitleUneditable);
+  }
+
   registerToolbar(listener) {
     this.setState({
       selectionChangeListeners: [...this.state.selectionChangeListeners, listener]
