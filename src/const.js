@@ -17,6 +17,8 @@ export const actions = {
   focusTitle: 'FOCUS_TITLE',
   focusContent: 'FOCUS_CONTENT',
 
+  undo: 'UNDO',
+
   setBold: 'bold',
   setItalic: 'italic',
   setUnderline: 'underline',
@@ -58,7 +60,7 @@ export const actions = {
   setEditorHeight: 'SET_EDITOR_HEIGHT',
   setFooterHeight: 'SET_FOOTER_HEIGHT',
   setPlatform: 'SET_PLATFORM',
-  
+
   getSelectionNodes: 'GET_SELECTION_NODES',
 
   makeContentAndTitleEditable: 'MAKE_CONTENT_AND_TITLE_EDITABLE',
@@ -78,7 +80,7 @@ export const messages = {
   TITLE_BLURRED: 'TITLE_BLURRED',
   CONTENT_FOCUSED: 'CONTENT_FOCUSED',
   CONTENT_BLURRED: 'CONTENT_BLURRED',
-  
+
   SELECTION_CHANGE: 'SELECTION_CHANGE',
   CONTENT_CHANGE: 'CONTENT_CHANGE',
   SELECTED_TEXT_RESPONSE: 'SELECTED_TEXT_RESPONSE',

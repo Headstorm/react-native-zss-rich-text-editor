@@ -99,7 +99,7 @@ export default class RichTextEditor extends Component {
     const { data: str } = nativeEvent;
     try {
       const message = JSON.parse(str);
-      
+
       switch (message.type) {
         case messages.TITLE_HTML_RESPONSE:
           if (this.titleResolve) {
@@ -585,6 +585,10 @@ export default class RichTextEditor extends Component {
     this._sendAction(actions.restoreSelection);
   }
 
+  undo() {
+    this._sendAction(actions.undo);
+  }
+
   init() {
     this._sendAction(actions.init);
     this.setPlatform();
@@ -638,7 +642,7 @@ export default class RichTextEditor extends Component {
       this.titleTextResolve = resolve;
       this.titleTextReject = reject;
       this._sendAction(actions.getTitleText);
-      
+
       this.pendingTitleText = setTimeout(() => {
         if (this.titleTextReject) {
           this.titleTextReject('timeout');
