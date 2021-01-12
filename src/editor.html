@@ -1088,7 +1088,7 @@
 				return (node.nodeName == "#text" ? node.parentNode : node);
 			}
 		};
-		
+
 		// test function to getSelectionNodes
 		zss_editor.getSelectionNodes = function () {
 			var node, selection;
@@ -1719,6 +1719,7 @@
 
 		zss_editor.setContentBlurHandler = function () {
 			addBlurEvent('zss_editor_content', function () {
+				const selection = window.getSelection().removeAllRanges()
 				ReactNativeWebView.postMessage(JSON.stringify({ type: 'CONTENT_BLURRED' }))
 			});
 		}
