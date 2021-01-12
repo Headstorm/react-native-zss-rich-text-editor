@@ -1182,8 +1182,10 @@
 		console.log('WARNING: We need a way to remove formatBlock items');
 
 		zss_editor.undo = function () {
-			document.execCommand('undo', false, null);
-			zss_editor.enabledEditingItems();
+			if (document.queryCommandEnabled('undo')) {
+				document.execCommand('undo', false, null);
+				zss_editor.enabledEditingItems();
+			}
 		}
 
 		zss_editor.redo = function () {
@@ -1440,17 +1442,17 @@
 				height: 18px;
 			`
 			const image = `
-				<img 
-					style="max-width: 400px; border-radius: 6px;" 
+				<img
+					style="max-width: 400px; border-radius: 6px;"
 					src="data:image/jpg;base64, ${base64String}"
 					alt="Red dot"
 				/>
 			`
 			const html = `
-				<div 
+				<div
 					style="position: relative; display: inline-block">
-					<div 
-						style="${removeBtnStyles}" 
+					<div
+						style="${removeBtnStyles}"
 						class="remove-btn"
 					>X</div>
 					${image}
