@@ -113,6 +113,8 @@ export const MessageConverter = (action) => {
     case `${actions.setContentBlurHandler}`:
       return `zss_editor.setContentBlurHandler();`;
 
+    case `${actions.undo}`:
+      return `zss_editor.undo();`;
     case `${actions.makeContentAndTitleEditable}`:
       return `zss_editor.makeContentAndTitleEditable();`;
     case `${actions.makeContentAndTitleUneditable}`:
