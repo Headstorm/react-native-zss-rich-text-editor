@@ -6,7 +6,7 @@ A fully functional Rich Text Editor for both Android and iOS, based off the [ZSS
 
 ## NOTE
 
-We (Headstorm) forked [zss-react-native](https://github.com/wix/react-native-zss-rich-text-editor) into the Headstorm account. You can find it (here)[https://github.com/Headstorm/react-native-zss-rich-text-editor]. The forked the original because Webview is no longer included in React-Native Core. The process for using this solution is documented in jira [here](https://headstorm.atlassian.net/browse/ALAR-257)
+We (Headstorm) forked [zss-react-native](https://github.com/wix/react-native-zss-rich-text-editor) into the Headstorm account. You can find it (here)[https://github.com/Headstorm/react-native-zss-rich-text-editor]. We forked the original because Webview is no longer included in React-Native Core. The process for using this solution is documented in jira [here](https://headstorm.atlassian.net/browse/ALAR-257)
 
 ### Development guide overview
 
