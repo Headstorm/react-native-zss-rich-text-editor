@@ -2,7 +2,39 @@
 
 # React Native Rich Text Editor
 
-A fully functional Rich Text Editor for both Android and iOS, based off the [ZSSRichTextEditor](https://github.com/nnhubbard/ZSSRichTextEditor/tree/master/ZSSRichTextEditor) project. 
+A fully functional Rich Text Editor for both Android and iOS, based off the [ZSSRichTextEditor](https://github.com/nnhubbard/ZSSRichTextEditor/tree/master/ZSSRichTextEditor) project.
+
+## NOTE
+
+We (Headstorm) forked [zss-react-native](https://github.com/wix/react-native-zss-rich-text-editor) into the Headstorm account. You can find it (here)[https://github.com/Headstorm/react-native-zss-rich-text-editor]. The forked the original because Webview is no longer included in React-Native Core. The process for using this solution is documented in jira [here](https://headstorm.atlassian.net/browse/ALAR-257)
+
+### Development guide overview
+
+  This is the basic architecture of how the RTE works within React-Native. If you look through the three core files, `RichTextEditor.js`, `const.js`, `WebviewMessageHandler.js` with the diagram in mind, the way it works should become clear quickly.
+
+  ![structure](docs/images/structure.gif)
+
+  As an example, if you want to add a some functionality that can be called from the Mobile_Physician code:
+
+  - You will need to create/expose a method on `RichTextEditor.js`
+
+  - You will need to create the constants in `const.js`
+
+  - You will need to include the message `WebviewMessageHandler.js`
+
+  - You will need to create/expose method on the editor in the editor.html file
+
+    Now you can call the the method in step one in `ProgressNote.native.tsx` and send/recieve data
+
+### Update process
+
+  Unfortunately, Metro does not seems to support symlinking, so I make my changes locally in Mobile_Physician and then update the source code in the fork.
+
+  Be sure to
+
+  - Make changes to the repo and push up the changes to master
+  - run `yarn add https://github.com/Headstorm/react-native-zss-rich-text-editor` in Mobile_Physician. This will update the commit in the yarn lock, allowing you to access the latest version of the fork
+
 
 ## Installation
 
@@ -42,7 +74,7 @@ The editor component. Simply place this component in your view hierarchy to rece
 
 	Text that will be used as a placeholder when no text is present in the title section.
 * `contentPlaceholder `
-	
+
 	Text that will be used as a placeholder when no text is present in the content section.
 * `customCSS `
 
@@ -85,14 +117,14 @@ The editor component. Simply place this component in your view hierarchy to rece
 
 This method shows a dialog for setting a link title and url, that will be inserted at the current cursor location.
 
-* `showLinkDialog(optionalTitle = '', optionalUrl = '')` 
+* `showLinkDialog(optionalTitle = '', optionalUrl = '')`
 
 To adjust content, placeholders or css, use these methods
 
 *  `setTitlePlaceholder(placeholder) `
 *  `setContentPlaceholder(placeholder)`
 *  `setCustomCSS(css) `
-*  `setTitleHTML(html)` 
+*  `setTitleHTML(html)`
 *  `setContentHTML(html) `
 
 These methods are used when adding content such as images or links that will intefere with the cursor position. `prepareInsert` saves  the current selection, and `restoreSelection` will replace it after the insertion is done. It is called implicitly by `insertImage` and `insertLink` so they should probably never be called directly.
@@ -110,7 +142,7 @@ To get the content or title HTML, use these **asynchronous** methods.
 To focus or blur sections, use these methods
 
 * `focusTitle()`
-* `focusContent()` 
+* `focusContent()`
 *  `blurTitleEditor() `
 *  `blurContentEditor() `
 
@@ -121,7 +153,7 @@ To know when the title or content are in focus, use the following methods.
 
 This method registers a function that will get called whenver the cursor position changes or a change is made to the styling of the editor at the cursor's position., The callback will be called with an array of `actions` that are active at the cusor position, allowing a toolbar to respond to changes.
 
-*  `registerToolbar(listener)` 
+*  `registerToolbar(listener)`
 
 ### Example Usage:
 
@@ -140,11 +172,11 @@ This method registers a function that will get called whenver the cursor positio
 
 This is a Component that provides a toolbar for easily controlling an editor. It is designed to be used together with a `RichTextEditor` component.
 
-The `RichTextToolbar` has one required property: 
+The `RichTextToolbar` has one required property:
 
 * `getEditor()`
 
-Which must provide a **function** that returns a `ref` to a `RichTextEditor` component. 
+Which must provide a **function** that returns a `ref` to a `RichTextEditor` component.
 
 This is because the `ref` is not created until after the first render, before which the toolbar is rendered. This means that any `ref` passed directly will inevitably be passed as `undefined`.
 
@@ -152,19 +184,19 @@ Other props supported by the `RichTextToolbar` component are:
 
 * `actions`
 
-	An `array` of `actions` to be provided by this toolbar. The default actions are: 
+	An `array` of `actions` to be provided by this toolbar. The default actions are:
 	* `actions.insertImage`
   	* `actions.setBold`
   	* `actions.setItalic`
   	* `actions.insertBulletsList`
   	* `actions.insertOrderedList`
   	* `actions.insertLink`
- 
+
 * `onPressAddLink`
 * `onPressAddImage`
 
-	Functions called when the `addLink` or `addImage `actions are tapped. 
-	
+	Functions called when the `addLink` or `addImage `actions are tapped.
+
 * `selectedButtonStyle`
 * `iconTint`
 * `selectedIconTint`
@@ -175,12 +207,12 @@ Other props supported by the `RichTextToolbar` component are:
 * `renderAction`
 
 	Altenatively, you can provide a render function that will be used instead of the default, so you can fully control the tollbar design.
-	
-	
-* `iconMap` 
+
+
+* `iconMap`
 
 	`RichTextToolbar` comes with default icons for the default actions it renders. To override those, or to add icons for non-default actions, provide them in a dictionary to this prop.
-	
+
 
 ### Example Usage:
 
@@ -210,7 +242,7 @@ This is a set of consts of all supported actions. These will be passed in arrays
 	  	blurContentEditor: 'BLUR_CONTENT_EDITOR',
 	  	focusTitle: 'FOCUS_TITLE',
 	  	focusContent: 'FOCUS_CONTENT',
-		
+
 	  	setBold: 'bold',
 	  	setItalic: 'italic',
 	  	setUnderline: 'underline',
